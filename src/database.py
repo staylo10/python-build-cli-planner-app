@@ -3,13 +3,15 @@ from src.deadlined_reminders import DeadlinedReminder
 
 def list_reminders():
     f = open("reminders.csv", "r")
-@@ -12,10 +13,13 @@ def list_reminders():
+
+    with f:
+        reader = csv.reader(f)
+
+        for row in reader:
+            print()
+            for e in row:
                 print(e.ljust(32), end=' ')
         print()
-
-def add_reminder(reminder):
-    print()
-    reminder = input("What would you like to be reminded about?: ")
 
 def add_reminder(text, date, ReminderClass):
     reminder = ReminderClass(text, date)
@@ -20,5 +22,4 @@ def add_reminder(text, date, ReminderClass):
 
     with open('reminders.csv', 'a+', newline='\n') as file:
         writer = csv.writer(file)
-        writer.writerow([reminder])
         writer.writerow(reminder)
