@@ -131,13 +131,10 @@ Head over to `src/deadlined_reminders.py` and in the class `DeadlinedReminder` d
 def __subclasshook__(cls, subclass):
     if cls is not DeadlinedReminder:
         return NotImplemented
-
     def attr_in_hierarchy(attr):
         return any (attr in SuperClass.__dict__ for SuperClass in subclass.__mro__)
-
     if not all(attr_in_hierarchy(attr) for attr in ('__iter__', 'is_due')):
         return NotImplemented
-
     return True
 ```
 
@@ -156,7 +153,6 @@ Now we are checking whether an *instance* of a `ReminderClass` class is valid, a
 ## Task twelve - One-time registration of a virtual subclass
 
 > **If it quacks like a duck**
-
 Before you finish off this project, you realize that back in task one you did some work that you can no longer use. Since `PoliteReminder` class it *not* implementing the prototype of `DeadlinedReminder`, passing it to `add_reminder()` would result in an error. However, the `is_due()` method of your protocol is not used anywhere yet, so you would be willing to give up the requirement of having a deadline on a reminder, as long as it asks you nicely to remember the item.
 
 Let's see how you can make `PoliteReminder` play together with `add_reminder()`, without downgrading the protocol. For this, we will benefit from Python's duck-typing, which allows you to use an object as long as it has the methods you need. (*If it quacks like a duck, and it walks like a duck, then it is a duck*)
